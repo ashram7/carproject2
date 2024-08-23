@@ -80,6 +80,7 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration configuration = new CorsConfiguration();
         // 허용할 출처 목록
         configuration.setAllowedOrigins(Arrays.asList(
@@ -91,12 +92,11 @@ public class SecurityConfig {
             "https://ashram7.github.io/carproject"  // GitHub Pages 프론트엔드 출처 추가
         ));
         */
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L); // pre-flight 요청의 결과를 캐시하는 시간 (초)
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(false);
+        configuration.applyPermitDefaultValues();
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
