@@ -79,17 +79,25 @@ public class SecurityConfig {
     private AuthEntryPoint exceptionHandler;
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("*"));
-        config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
-        config.setAllowedMethods(Arrays.asList("*"));
-        config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(false);
-        config.applyPermitDefaultValues();
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        // 허용할 출처 목록
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://carproject2-f59438f29f60.herokuapp.com:3000"
+        ));
+        /*
+        configuration.setAllowedOrigins(Arrays.asList(
+            "https://carproject-7f5db2f7fb57.herokuapp.com:3000",  // 이전에 설정된 출처
+            "https://ashram7.github.io/carproject"  // GitHub Pages 프론트엔드 출처 추가
+        ));
+        */
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L); // pre-flight 요청의 결과를 캐시하는 시간 (초)
 
-        source.registerCorsConfiguration("/**", config);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }
