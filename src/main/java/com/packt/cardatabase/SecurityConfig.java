@@ -39,30 +39,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // /login 경로에 대한 POST 요청은 인증 없이 허용
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
+                        .anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(exceptionHandler))
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-    /*@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authz -> authz  //설명1)
-                        .anyRequest().authenticated())
-                .formLogin(form -> form  //설명2)
-                        .loginPage("/login").permitAll())
-                // Updated way to enable HTTP Basic authentication
-                .httpBasic(Customizer.withDefaults());  //설명3)
-
-        return http.build();
-    }*/
 
     /*@Bean
     public UserDetailsService userDetailsService() {
         UserDetails user =
+                // User.builder()
                 User.withDefaultPasswordEncoder()
                         .username("user")
-                        .password("{noop}password")
+                        .password("{noop}password")  // Use {noop} for plain text (for example purposes only)
                         .roles("USER")
                         .build();
 
@@ -93,10 +82,8 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList(
-                "https://carproject2-f59438f29f60.herokuapp.com:3000"
-        ));
-        //config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
         config.setAllowedMethods(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(false);
