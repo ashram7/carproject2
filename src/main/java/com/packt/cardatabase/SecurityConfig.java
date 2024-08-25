@@ -94,7 +94,7 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(
-                "https://cardatabase-258ae73b25a2.herokuapp.com:3000"
+                "https://cardatabase-258ae73b25a2.herokuapp.com"
         ));
         //config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
         config.setAllowedMethods(Arrays.asList("*"));
