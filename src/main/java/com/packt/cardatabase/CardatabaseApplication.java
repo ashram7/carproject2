@@ -1,12 +1,15 @@
 package com.packt.cardatabase;
 
-import com.packt.cardatabase.domain.*;
+import com.packt.cardatabase.domain.Car;
+import com.packt.cardatabase.domain.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.packt.cardatabase.domain.Owner;
+import com.packt.cardatabase.domain.OwnerRepository;
 
 import java.util.Arrays;
 
@@ -18,8 +21,6 @@ public class CardatabaseApplication implements CommandLineRunner {
 	private CarRepository repository;
 	@Autowired
 	private OwnerRepository orepository;
-	@Autowired
-	private UserRepository urepository;
 	public static void main(String[] args) {
 
 		SpringApplication.run(CardatabaseApplication.class, args);
@@ -40,12 +41,5 @@ public class CardatabaseApplication implements CommandLineRunner {
 		for (Car car : repository.findAll()) {
 			logger.info(car.getBrand() + " " + car.getModel());
 		}
-
-		// 사용자 이름 : user, 암호 : user
-		urepository.save(new User("user",
-				"$2a$10$AVhqC2KyQtiudqCpynU/IOxoSTyhPr2l.QmEYSPIB40I.g9mk1VpK","USER"));
-		// 사용자 이름 : admin, 암호 : admin
-		urepository.save(new User("admin",
-				"$2a$10$.MnD/rtWn.4.snNT/cohWup2eAbSSeW3qtJnsbfiEUIE3.5f5fMF6", "ADMIN"));
 	}
 }
