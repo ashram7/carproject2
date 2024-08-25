@@ -99,7 +99,7 @@ public class SecurityConfig {
         //config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
         config.setAllowedMethods(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
         config.applyPermitDefaultValues();
 
         source.registerCorsConfiguration("/**", config);
